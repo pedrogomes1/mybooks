@@ -1,3 +1,4 @@
+import { Heart } from "phosphor-react";
 import { ChipCategories } from "../ChipCategories";
 
 import styles from "./BookCard.module.css";
@@ -11,6 +12,12 @@ export function BookCard() {
           <li>
             <ChipCategories />
           </li>
+          <button
+            title="Adicionar aos favoritos"
+            className={styles.favoriteButton}
+          >
+            <Heart size={30} />
+          </button>
         </ul>
 
         <h3>React.Js Essentials</h3>
@@ -25,6 +32,7 @@ export function BookCard() {
           <h4>Publicado em:</h4>
           <time>2021-01-05</time>
         </div>
+        <button className={styles.detailsButton}>Detalhes</button>
       </div>
     </div>
   );
