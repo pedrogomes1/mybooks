@@ -3,6 +3,7 @@
   flex-direction: column;
   gap: 2rem;
   max-height: 50rem;
+  height: 100%;
   width: 100%;
   max-width: 50rem;
   border: 1px solid var(--gray-600);
@@ -19,7 +20,7 @@
 .container img {
   height: 15rem;
   width: 100%;
-  object-fit: cover;
+  object-fit: contain;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
 }
