@@ -10,6 +10,8 @@
 
   --purple-300: #996DFF;
   --purple-500: #8257E5;
+
+  --red-500: #f75a68;
 }
 
 * {
@@ -28,7 +30,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-body, input, textarea, button {
+body,
+input,
+textarea,
+button {
   font-family: 'Inter', sans-serif;
   font-weight: 400;
   font-size: 1.6rem;
