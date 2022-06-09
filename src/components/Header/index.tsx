@@ -1,5 +1,5 @@
 import { Heart } from "phosphor-react";
-import logo from "../assets/logo.svg";
+import logo from "../../assets/logo.svg";
 
 import styles from "./Header.module.css";
 
