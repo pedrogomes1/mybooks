@@ -10,7 +10,11 @@ export function InputSearch() {
           size={32}
           color="#8d8d99"
         />
-        <input type="text" placeholder="Digite um livro para a busca" />
+        <input
+          autoFocus
+          type="text"
+          placeholder="Digite um livro para a busca"
+        />
       </div>
       <i className={styles.suggestionsBooks}>(Ex: React, Javascript, Java)</i>
     </>
