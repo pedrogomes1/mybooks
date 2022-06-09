@@ -11,4 +11,10 @@ describe("InputSearch component", () => {
       screen.getByPlaceholderText("Digite um livro para a busca")
     ).toBeInTheDocument();
   });
+
+  it("should render text with some options", () => {
+    expect(
+      screen.getByText("(Ex: React, Javascript, Java)")
+    ).toBeInTheDocument();
+  });
 });
