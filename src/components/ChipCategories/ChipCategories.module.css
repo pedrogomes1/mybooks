@@ -1,0 +1,13 @@
+.container {
+  padding: 0.3rem;
+  text-align: center;
+  background: var(--purple-500);
+  border-radius: 8px;
+  text-align: center;
+  cursor: default;
+}
+
+.container span {
+  font-size: 1.4rem;
+  color: var(--white);
+}
