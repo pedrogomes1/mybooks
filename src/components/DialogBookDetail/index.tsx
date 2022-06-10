@@ -1,10 +1,10 @@
-import Dialog from "react-modal";
-import { X } from "phosphor-react";
+import { Modal as Dialog } from "react-responsive-modal";
 
 import { BookProps } from "../../pages/Home";
 import notFoundBookImage from "../../assets/book-not-found.jpg";
 
 import styles from "./DialogBookDetail.module.css";
+import "react-responsive-modal/styles.css";
 
 interface DialogBookDetailProps {
   isOpen: boolean;
@@ -17,26 +17,30 @@ export function DialogBookDetail({
   onClose,
   book,
 }: DialogBookDetailProps) {
-  Dialog.setAppElement("#root");
   return (
     <Dialog
-      isOpen={isOpen}
-      onRequestClose={onClose}
-      className={styles.dialog}
-      overlayClassName={styles.overlay}
+      open={isOpen}
+      onClose={onClose}
+      center
+      classNames={{
+        overlay: styles.overlay,
+        modal: styles.dialog,
+        closeIcon: styles.closeIcon,
+      }}
+      aria-labelledby={book.title}
+      aria-describedby={book.description}
     >
-      <header>
-        <button title="Fechar detalhes" onClick={onClose}>
-          <X size={30} />
-        </button>
-      </header>
-
       <main>
-        <img src={book.imageLinks?.thumbnail || notFoundBookImage} />
-        <h2>{book.title}</h2>
+        <img
+          src={book.imageLinks?.thumbnail || notFoundBookImage}
+          alt="Imagem representativa do livro"
+        />
+        <h2 data-testid="title">{book.title}</h2>
         {book.subtitle && <h4>{book.subtitle}</h4>}
-        <span>Autores: {book.authors.map((author) => author)}</span>
-        <span>Editor(a): {book.publisher}</span>
+        <span data-testid="authors">
+          Autores: {book.authors.map((author) => author)}
+        </span>
+        <span data-testid="editors">Editor(a): {book.publisher}</span>
       </main>
 
       <p className={styles.description}>{book.description}</p>
