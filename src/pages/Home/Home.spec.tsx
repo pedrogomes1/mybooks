@@ -108,11 +108,17 @@ describe("Home page", () => {
     expect(emptyBooksText).toBeInTheDocument();
   });
 
-  it("should update book list when a book is favorited", async () => {
+  it("should update book list when a book is favorited with filter", async () => {
     status = success;
     render(<Home />);
 
     const user = userEvent.setup();
+
+    const inputSearch = screen.getByPlaceholderText(
+      "Digite um livro para a busca"
+    );
+
+    await user.type(inputSearch, "React native");
 
     const favoriteButton = screen.getAllByTitle("Adicionar aos favoritos");
     const listItem = screen.queryAllByTestId("book-title");
