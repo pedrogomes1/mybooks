@@ -60,7 +60,7 @@ export interface BookProps {
   imageLinks?: {
     thumbnail: string;
   };
-  categories: string[];
+  categories?: string[];
 }
 export interface RequestBookProps {
   items: {
