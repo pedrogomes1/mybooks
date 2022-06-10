@@ -1,7 +1,7 @@
 import { Heart } from "phosphor-react";
 import { ChipCategories } from "../ChipCategories";
 
-import { BookProps } from "../Books";
+import { BookProps } from "../../pages/Home";
 
 import styles from "./BookCard.module.css";
 
@@ -9,7 +9,8 @@ interface BookCardProps {
   book: BookProps;
   onToggleBookDialogDetail: () => void;
   onSelectBook: (book: BookProps) => void;
-  onRemoveFavoriteBookToList: (bookId: string) => void;
+  onRemoveFavoriteBookToList?: (bookId: string) => void;
+  isFavorite?: boolean;
 }
 
 export function BookCard({
@@ -17,6 +18,7 @@ export function BookCard({
   onToggleBookDialogDetail,
   onSelectBook,
   onRemoveFavoriteBookToList,
+  isFavorite = false,
 }: BookCardProps) {
   function handleClickDetailsBook() {
     onToggleBookDialogDetail();
@@ -30,7 +32,7 @@ export function BookCard({
     const newBooks = [...books, book];
     localStorage.setItem("mybooks", JSON.stringify(newBooks));
 
-    onRemoveFavoriteBookToList(book.id);
+    if (onRemoveFavoriteBookToList) onRemoveFavoriteBookToList(book.id);
   }
 
   return (
@@ -45,11 +47,13 @@ export function BookCard({
             <ChipCategories />
           </li>
           <button
-            title="Adicionar aos favoritos"
+            title={
+              isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"
+            }
             className={styles.favoriteButton}
             onClick={() => handleAddBookToFavorite(book)}
           >
-            <Heart size={30} />
+            <Heart size={30} weight={isFavorite ? "fill" : "regular"} />
           </button>
         </ul>
 
