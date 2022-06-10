@@ -22,7 +22,11 @@ export function Home() {
   }
 
   function handleSearchBook(bookName: string) {
-    setBookNameSearch(bookName);
+    const bookNameSearch = bookName.trimEnd();
+
+    if (bookNameSearch.length) {
+      setBookNameSearch(bookNameSearch);
+    }
   }
 
   return (
