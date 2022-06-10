@@ -30,9 +30,9 @@ export function BooksList({
 
   return (
     <>
-      <ul className={styles.booksList}>
+      <ul data-testid="books-list" className={styles.booksList}>
         {books.map((book) => (
-          <li key={book.id}>
+          <li data-testid="books-listitem" key={book.id}>
             <BookCard
               book={book}
               onSelectBook={handleSelectBook}
