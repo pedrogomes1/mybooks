@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import BeatSpinnerLoader from "react-spinners/BeatLoader";
 
 import { Header } from "../../components/Header";
 import { BooksList } from "../../components/BooksList";
@@ -27,6 +28,14 @@ export interface RequestBookProps {
     id: string;
     volumeInfo: BookProps;
   }[];
+}
+
+export enum RequestStatus {
+  idle = "idle",
+  empty = "empty",
+  loading = "loading",
+  success = "success",
+  error = "error",
 }
 
 const TIME_IN_MILLISECONDS_FOR_DEBOUNCE = 800;
@@ -71,8 +80,11 @@ function filterBooksWithoutFavorites(
 }
 
 export function Home() {
+  const { idle, empty, error, loading, success } = RequestStatus;
+
   const [bookNameSearch, setBookNameSearch] = useState("react");
   const [books, setBooks] = useState<BookProps[]>([]);
+  const [status, setStatus] = useState<RequestStatus>(idle);
 
   const debouncedValue = useDebounce<string>(
     bookNameSearch,
@@ -83,6 +95,7 @@ export function Home() {
 
   useEffect(() => {
     async function fetchBooks() {
+      setStatus(loading);
       try {
         const { data } = await axios.get<RequestBookProps>(URL_GET_BOOKS);
 
@@ -95,8 +108,9 @@ export function Home() {
         );
 
         setBooks(booksWithoutFavorites);
-      } catch (error) {
-        console.log(error);
+        setStatus(booksWithoutFavorites.length ? success : empty);
+      } catch (err) {
+        setStatus(error);
       }
     }
     fetchBooks();
@@ -121,7 +135,17 @@ export function Home() {
       <Header />
       <main className={styles.container}>
         <InputSearch onChange={handleSearchBook} />
-        {!!books.length && (
+        {status === loading ? (
+          <div className={styles.feedback}>
+            <BeatSpinnerLoader color="#996DFF" />
+          </div>
+        ) : status === error ? (
+          <h3 className={styles.feedback}>
+            Erro ao carregar os livros. Por favor, tente novamente mais tarde.
+          </h3>
+        ) : status === empty ? (
+          <h3 className={styles.feedback}>Nenhum livro encontrado.</h3>
+        ) : (
           <BooksList
             books={books}
             onRemoveFavoriteBookToList={handleRemoveFavoriteBookToList}
