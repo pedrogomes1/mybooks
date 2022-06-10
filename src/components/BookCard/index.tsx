@@ -1,16 +1,26 @@
 import { Heart } from "phosphor-react";
 import { ChipCategories } from "../ChipCategories";
 
-import styles from "./BookCard.module.css";
-
 import { BookProps } from "../Books";
+
+import styles from "./BookCard.module.css";
 
 interface BookCardProps {
   book: BookProps;
   onToggleBookDialogDetail: () => void;
+  onSelectBook: (book: BookProps) => void;
 }
 
-export function BookCard({ book, onToggleBookDialogDetail }: BookCardProps) {
+export function BookCard({
+  book,
+  onToggleBookDialogDetail,
+  onSelectBook,
+}: BookCardProps) {
+  function handleClickDetailsBook() {
+    onToggleBookDialogDetail();
+    onSelectBook(book);
+  }
+
   return (
     <div className={styles.container}>
       <img
@@ -39,7 +49,7 @@ export function BookCard({ book, onToggleBookDialogDetail }: BookCardProps) {
           <time data-testid="book-publishedAt">{book.publishedDate}</time>
         </div>
         <button
-          onClick={onToggleBookDialogDetail}
+          onClick={handleClickDetailsBook}
           className={styles.detailsButton}
         >
           Detalhes
