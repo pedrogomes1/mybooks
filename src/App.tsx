@@ -1,13 +1,7 @@
-import { Header } from "./components/Header";
-import { Books } from "./components/Books";
+import Routes from "./routes";
 
 function App() {
-  return (
-    <>
-      <Header />
-      <Books />
-    </>
-  );
+  return <Routes />;
 }
 
 export { App };
