@@ -22,7 +22,7 @@ const bookMocked = {
   },
 };
 
-describe("BooksList component", () => {
+describe("DialogBookDetail component", () => {
   beforeEach(() => {
     render(
       <DialogBookDetail isOpen onClose={mockedOnClose} book={bookMocked} />
