@@ -1,3 +1,4 @@
+import userEvent from "@testing-library/user-event";
 import { render, screen } from "@testing-library/react";
 import { BooksList } from ".";
 
@@ -47,5 +48,16 @@ describe("BooksList component", () => {
 
     expect(booksList).toBeInTheDocument();
     expect(booksListItems).toHaveLength(2);
+  });
+
+  it("should render the modal when the details button is pressed", async () => {
+    const user = userEvent.setup();
+
+    const detailsButton = screen.getAllByRole("button", { name: "Detalhes" });
+
+    await user.click(detailsButton[0]);
+
+    const dialog = screen.getByTestId("modal");
+    expect(dialog).toBeInTheDocument();
   });
 });
