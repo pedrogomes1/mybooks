@@ -41,8 +41,6 @@ describe("DialogBookDetail component", () => {
     expect(bookTitle).toBeInTheDocument();
     expect(bookAuthors).toBeInTheDocument();
     expect(bookEditors).toBeInTheDocument();
-
-    screen.debug();
   });
 
   it("should close modal when close button is pressed", async () => {
