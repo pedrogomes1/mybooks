@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-
 import axios from "axios";
 import useDebounce from "./useDebounce";
+import { RequestStatus } from "../types/status";
 
 function getAllIdsOfFavoriteBooks() {
   const booksAlreadyFavorites = localStorage.getItem("mybooks") || "[]";
@@ -46,14 +46,6 @@ function filterBooksWithoutFavorites(
   allFavoriteBooksIds: string[]
 ) {
   return books.filter((book) => !allFavoriteBooksIds.includes(book.id));
-}
-
-export enum RequestStatus {
-  idle = "idle",
-  empty = "empty",
-  loading = "loading",
-  success = "success",
-  error = "error",
 }
 
 export interface BookProps {

@@ -1,5 +1,6 @@
 import { MagnifyingGlass } from "phosphor-react";
 import { ChangeEvent } from "react";
+
 import styles from "./InputSearch.module.css";
 
 interface InputSearchProps {
