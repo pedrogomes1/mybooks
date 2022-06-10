@@ -79,9 +79,7 @@ export function Home() {
     TIME_IN_MILLISECONDS_FOR_DEBOUNCE
   );
 
-  const URL_GET_BOOKS = `https://www.googleapis.com/books/v1/volumes?q=${bookNameSearch}&key=${
-    import.meta.env.VITE_API_KEY
-  }`;
+  const URL_GET_BOOKS = `https://www.googleapis.com/books/v1/volumes?q=${bookNameSearch}&key=${process.env.VITE_API_KEY}`;
 
   useEffect(() => {
     async function fetchBooks() {
@@ -98,7 +96,7 @@ export function Home() {
 
         setBooks(booksWithoutFavorites);
       } catch (error) {
-        alert(error);
+        console.log(error);
       }
     }
     fetchBooks();
