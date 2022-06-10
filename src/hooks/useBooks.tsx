@@ -52,8 +52,8 @@ export interface BookProps {
   id: string;
   title: string;
   subtitle?: string;
-  authors: string[];
-  publisher: string;
+  authors?: string[];
+  publisher?: string;
   publishedDate: string;
   description: string;
   previewLink: string;
