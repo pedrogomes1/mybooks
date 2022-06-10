@@ -9,7 +9,7 @@ const bookMocked = {
   title: "React Aprenda Praticando",
   subtitle:
     "Desenvolva aplicações web reais com uso da biblioteca React e de seus módulos auxiliares",
-  authors: ["Mauricio Samy Silva"],
+  authors: ["Mauricio Samy Silva", "Jose da Silva"],
   publisher: "Novatec Editora",
   publishedDate: "2021-01-05",
   description:
