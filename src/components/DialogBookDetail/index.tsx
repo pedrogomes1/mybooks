@@ -1,7 +1,8 @@
 import Dialog from "react-modal";
 import { X } from "phosphor-react";
 
-import { BookProps } from "../Books";
+import { BookProps } from "../../pages/Home";
+import notFoundBookImage from "../../assets/book-not-found.jpg";
 
 import styles from "./DialogBookDetail.module.css";
 
@@ -32,7 +33,7 @@ export function DialogBookDetail({
       </header>
 
       <main>
-        <img src={book.imageLinks.thumbnail} />
+        <img src={book.imageLinks?.thumbnail || notFoundBookImage} />
         <h2>{book.title}</h2>
         <h4>{book.subtitle}</h4>
         <span>Autores: {book.authors.map((author) => author)}</span>

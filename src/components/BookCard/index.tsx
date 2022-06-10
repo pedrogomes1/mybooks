@@ -3,6 +3,7 @@ import { ChipCategories } from "../ChipCategories";
 
 import { BookProps } from "../../pages/Home";
 
+import notFoundBookImage from "../../assets/book-not-found.jpg";
 import styles from "./BookCard.module.css";
 
 interface BookCardProps {
@@ -38,7 +39,7 @@ export function BookCard({
   return (
     <div className={styles.container}>
       <img
-        src={book.imageLinks.thumbnail}
+        src={book.imageLinks?.thumbnail || notFoundBookImage}
         alt="Imagem representativa do livro"
       />
       <div className={styles.content}>
