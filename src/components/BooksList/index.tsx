@@ -6,7 +6,7 @@ import { DialogBookDetail } from "../DialogBookDetail";
 
 import styles from "./BooksList.module.css";
 
-interface BooksList {
+interface BooksListProps {
   books: BookProps[];
   onRemoveFavoriteBookToList?: (bookId: string) => void;
   isFavorite?: boolean;
@@ -16,7 +16,7 @@ export function BooksList({
   books,
   onRemoveFavoriteBookToList,
   isFavorite,
-}: BooksList) {
+}: BooksListProps) {
   const [isOpenBookDialogDetail, setIsOpenBookDialogDetail] = useState(false);
   const [bookSelected, setBookSelected] = useState({} as BookProps);
 
