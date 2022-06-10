@@ -17,7 +17,7 @@ export function DialogBookDetail({
   onClose,
   book,
 }: DialogBookDetailProps) {
-  const hasManyAuthors = book.authors.length > 1;
+  const hasManyAuthors = book.authors && book.authors?.length > 1;
 
   return (
     <Dialog
@@ -39,18 +39,22 @@ export function DialogBookDetail({
         />
         <h2 data-testid="title">{book.title}</h2>
         {book.subtitle && <h4>{book.subtitle}</h4>}
-        <div>
-          <h4>Autores:</h4>
-          <span data-testid="authors">
-            {book.authors.map((author) =>
-              hasManyAuthors ? `${author} | ` : author
-            )}
-          </span>
-        </div>
-        <div>
-          <h4>Editor(a):</h4>
-          <span data-testid="editors">{book.publisher}</span>
-        </div>
+        {!!book.authors?.length && (
+          <div>
+            <h4>Autores:</h4>
+            <span data-testid="authors">
+              {book.authors.map((author) =>
+                hasManyAuthors ? `${author} | ` : author
+              )}
+            </span>
+          </div>
+        )}
+        {book.publisher && (
+          <div>
+            <h4>Editor(a):</h4>
+            <span data-testid="editors">{book.publisher}</span>
+          </div>
+        )}
       </main>
 
       <p className={styles.description}>{book.description}</p>
