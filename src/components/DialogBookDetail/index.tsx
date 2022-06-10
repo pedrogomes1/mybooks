@@ -1,6 +1,6 @@
 import { Modal as Dialog } from "react-responsive-modal";
 
-import { BookProps } from "../../pages/Home";
+import { BookProps } from "../../hooks/useBooks";
 import notFoundBookImage from "../../assets/book-not-found.jpg";
 
 import styles from "./DialogBookDetail.module.css";
@@ -17,6 +17,8 @@ export function DialogBookDetail({
   onClose,
   book,
 }: DialogBookDetailProps) {
+  const hasManyAuthors = book.authors.length > 1;
+
   return (
     <Dialog
       open={isOpen}
@@ -37,10 +39,18 @@ export function DialogBookDetail({
         />
         <h2 data-testid="title">{book.title}</h2>
         {book.subtitle && <h4>{book.subtitle}</h4>}
-        <span data-testid="authors">
-          Autores: {book.authors.map((author) => author)}
-        </span>
-        <span data-testid="editors">Editor(a): {book.publisher}</span>
+        <div>
+          <h4>Autores:</h4>
+          <span data-testid="authors">
+            {book.authors.map((author) =>
+              hasManyAuthors ? `${author} | ` : author
+            )}
+          </span>
+        </div>
+        <div>
+          <h4>Editor(a):</h4>
+          <span data-testid="editors">{book.publisher}</span>
+        </div>
       </main>
 
       <p className={styles.description}>{book.description}</p>
