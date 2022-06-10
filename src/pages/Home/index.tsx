@@ -6,10 +6,7 @@ import { BooksList } from "../../components/BooksList";
 import { InputSearch } from "../../components/InputSearch";
 
 import styles from "./Home.module.css";
-
-const URL_GET_BOOKS = `https://www.googleapis.com/books/v1/volumes?q=react&key=${
-  import.meta.env.VITE_API_KEY
-}`;
+import useDebounce from "../../hooks/useDebounce";
 
 export interface BookProps {
   id: string;
@@ -25,20 +22,32 @@ export interface BookProps {
   };
   categories: string[];
 }
-export interface IRequestBookProps {
+export interface RequestBookProps {
   items: {
     id: string;
     volumeInfo: BookProps;
   }[];
 }
+
+const TIME_IN_MILLISECONDS_FOR_DEBOUNCE = 800;
+
 export function Home() {
   const [bookNameSearch, setBookNameSearch] = useState("");
   const [books, setBooks] = useState<BookProps[]>([]);
 
+  const debouncedValue = useDebounce<string>(
+    bookNameSearch,
+    TIME_IN_MILLISECONDS_FOR_DEBOUNCE
+  );
+
+  const URL_GET_BOOKS = `https://www.googleapis.com/books/v1/volumes?q=${bookNameSearch}&key=${
+    import.meta.env.VITE_API_KEY
+  }`;
+
   useEffect(() => {
     async function fetchBooks() {
       try {
-        const { data } = await axios.get<IRequestBookProps>(URL_GET_BOOKS);
+        const { data } = await axios.get<RequestBookProps>(URL_GET_BOOKS);
 
         const allFavoriteBooksIds = getAllIdsOfFavoriteBooks();
 
@@ -80,7 +89,7 @@ export function Home() {
       }
     }
     fetchBooks();
-  }, []);
+  }, [debouncedValue]);
 
   function getAllIdsOfFavoriteBooks() {
     const booksAlreadyFavorites = localStorage.getItem("mybooks") || "[]";
@@ -91,11 +100,16 @@ export function Home() {
   function handleRemoveFavoriteBookToList(bookId: string) {
     setBooks((prevBooks) => prevBooks.filter((book) => book.id !== bookId));
   }
+
+  function handleSearchBook(bookName: string) {
+    setBookNameSearch(bookName);
+  }
+
   return (
     <>
       <Header />
       <main className={styles.container}>
-        <InputSearch />
+        <InputSearch onChange={handleSearchBook} />
         {!!books.length && (
           <BooksList
             books={books}
