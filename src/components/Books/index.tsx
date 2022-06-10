@@ -34,8 +34,9 @@ export interface IRequestBookProps {
 
 export function Books() {
   const [bookNameSearch, setBookNameSearch] = useState("");
-  const [isOpenBookDialogDetail, setIsOpenBookDialogDetail] = useState(true);
   const [books, setBooks] = useState<BookProps[]>([]);
+  const [bookSelected, setBookSelected] = useState({} as BookProps);
+  const [isOpenBookDialogDetail, setIsOpenBookDialogDetail] = useState(false);
 
   useEffect(() => {
     async function fetchBooks() {
@@ -76,9 +77,13 @@ export function Books() {
     fetchBooks();
   }, []);
 
-  const handleToggleBookDialogDetail = () => {
+  function handleToggleBookDialogDetail() {
     setIsOpenBookDialogDetail((prev) => !prev);
-  };
+  }
+
+  function handleSelectBook(book: BookProps) {
+    setBookSelected(book);
+  }
 
   return (
     <main className={styles.container}>
@@ -90,6 +95,7 @@ export function Books() {
               <BookCard
                 book={book}
                 onToggleBookDialogDetail={handleToggleBookDialogDetail}
+                onSelectBook={handleSelectBook}
               />
             </li>
           ))}
@@ -100,6 +106,7 @@ export function Books() {
         <DialogBookDetail
           isOpen={isOpenBookDialogDetail}
           onClose={handleToggleBookDialogDetail}
+          book={bookSelected}
         />
       )}
     </main>
