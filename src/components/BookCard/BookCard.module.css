@@ -32,6 +32,15 @@
   padding: 0 2rem 2rem;
 }
 
+.content h3 {
+  max-width: 50rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
 .categoryChipList {
   display: flex;
   justify-content: space-between;
@@ -83,9 +92,7 @@
   height: 4rem;
   padding: 0 1.5rem;
   font-weight: bold;
-  margin: 0 auto;
   cursor: pointer;
-  width: max-content;
 
   transition: color 0.1s, background-color 0.1s;
 }
