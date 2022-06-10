@@ -40,6 +40,8 @@
 .dialog main img {
   width: fit-content;
   height: fit-content;
+  max-height: 35rem;
+  max-width: 35rem;
   object-fit: contain;
 }
 
