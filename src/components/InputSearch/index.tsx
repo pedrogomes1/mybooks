@@ -1,7 +1,16 @@
 import { MagnifyingGlass } from "phosphor-react";
+import { ChangeEvent } from "react";
 import styles from "./InputSearch.module.css";
 
-export function InputSearch() {
+interface InputSearchProps {
+  onChange: (value: string) => void;
+}
+
+export function InputSearch({ onChange }: InputSearchProps) {
+  function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
+    onChange(event.target.value);
+  }
+
   return (
     <>
       <div className={styles.containerSearch}>
@@ -14,6 +23,7 @@ export function InputSearch() {
           autoFocus
           type="text"
           placeholder="Digite um livro para a busca"
+          onChange={handleInputChange}
         />
       </div>
       <i className={styles.suggestionsBooks}>(Ex: React, Javascript, Java)</i>
