@@ -6,8 +6,6 @@ import notFoundBookImage from "../../assets/book-not-found.jpg";
 
 import styles from "./DialogBookDetail.module.css";
 
-Dialog.setAppElement("#root");
-
 interface DialogBookDetailProps {
   isOpen: boolean;
   onClose: () => void;
@@ -19,6 +17,7 @@ export function DialogBookDetail({
   onClose,
   book,
 }: DialogBookDetailProps) {
+  Dialog.setAppElement("#root");
   return (
     <Dialog
       isOpen={isOpen}
@@ -35,7 +34,7 @@ export function DialogBookDetail({
       <main>
         <img src={book.imageLinks?.thumbnail || notFoundBookImage} />
         <h2>{book.title}</h2>
-        <h4>{book.subtitle}</h4>
+        {book.subtitle && <h4>{book.subtitle}</h4>}
         <span>Autores: {book.authors.map((author) => author)}</span>
         <span>Editor(a): {book.publisher}</span>
       </main>
