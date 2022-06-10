@@ -50,16 +50,12 @@
   list-style: none;
 }
 
-.categoryChipList li {
-  width: 100%;
-  max-width: 8rem;
-}
-
 .favoriteButton {
   background: transparent;
   border: 0;
   color: var(--red-500);
   cursor: pointer;
+  margin-left: auto;
 
   transition: transform 0.2s;
 }
