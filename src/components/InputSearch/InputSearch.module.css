@@ -2,7 +2,7 @@
   margin: 0 auto;
   display: flex;
   align-items: center;
-  width: 73rem;
+  max-width: 73rem;
   height: 5.4rem;
   padding: 0 1.5rem;
   background: var(--gray-100);

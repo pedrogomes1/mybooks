@@ -1,5 +1,5 @@
 .container {
-  padding: 20rem 17rem;
+  padding: 0 17rem 3rem;
   display: flex;
   flex-direction: column;
 }
@@ -7,6 +7,7 @@
 .container header {
   display: flex;
   align-items: center;
+  height: 20rem;
 }
 
 .container header button {
@@ -21,4 +22,20 @@
   align-items: center;
   gap: 1.5rem;
   margin: 0 auto;
+}
+
+@media(max-width: 700px) {
+  .container {
+    padding: 5rem 5rem;
+  }
+
+  .container header h1 svg {
+    display: none;
+  }
+
+  .container header {
+    flex-direction: column;
+    gap: 2rem;
+    height: 10rem;
+  }
 }
