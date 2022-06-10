@@ -1,7 +1,7 @@
 import { useState } from "react";
 
+import { BookProps } from "../../hooks/useBooks";
 import { BookCard } from "../BookCard";
-import { BookProps } from "../../pages/Home";
 import { DialogBookDetail } from "../DialogBookDetail";
 
 import styles from "./BooksList.module.css";
