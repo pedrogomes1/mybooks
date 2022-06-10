@@ -42,6 +42,9 @@ export function Books() {
     async function fetchBooks() {
       try {
         const { data } = await axios.get<IRequestBookProps>(URL_GET_BOOKS);
+
+        const allFavoriteBooksIds = getAllIdsOfFavoriteBooks();
+
         const booksData = data.items.map(({ id, volumeInfo }) => {
           const {
             title,
@@ -69,7 +72,12 @@ export function Books() {
             imageLinks,
           };
         });
-        setBooks(booksData);
+
+        const booksWithoutFavorites = booksData.filter(
+          (book) => !allFavoriteBooksIds.includes(book.id)
+        );
+
+        setBooks(booksWithoutFavorites);
       } catch (error) {
         alert(error);
       }
@@ -77,12 +85,22 @@ export function Books() {
     fetchBooks();
   }, []);
 
+  function getAllIdsOfFavoriteBooks() {
+    const booksAlreadyFavorites = localStorage.getItem("mybooks") || "[]";
+    const books = JSON.parse(booksAlreadyFavorites);
+    return books.map((book: BookProps) => book.id);
+  }
+
   function handleToggleBookDialogDetail() {
     setIsOpenBookDialogDetail((prev) => !prev);
   }
 
   function handleSelectBook(book: BookProps) {
     setBookSelected(book);
+  }
+
+  function handleRemoveFavoriteBookToList(bookId: string) {
+    setBooks((prevBooks) => prevBooks.filter((book) => book.id !== bookId));
   }
 
   return (
@@ -96,6 +114,7 @@ export function Books() {
                 book={book}
                 onToggleBookDialogDetail={handleToggleBookDialogDetail}
                 onSelectBook={handleSelectBook}
+                onRemoveFavoriteBookToList={handleRemoveFavoriteBookToList}
               />
             </li>
           ))}

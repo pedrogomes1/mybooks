@@ -9,16 +9,28 @@ interface BookCardProps {
   book: BookProps;
   onToggleBookDialogDetail: () => void;
   onSelectBook: (book: BookProps) => void;
+  onRemoveFavoriteBookToList: (bookId: string) => void;
 }
 
 export function BookCard({
   book,
   onToggleBookDialogDetail,
   onSelectBook,
+  onRemoveFavoriteBookToList,
 }: BookCardProps) {
   function handleClickDetailsBook() {
     onToggleBookDialogDetail();
     onSelectBook(book);
+  }
+
+  function handleAddBookToFavorite(book: BookProps) {
+    const booksAlreadyFavorites = localStorage.getItem("mybooks") || "[]";
+    const books = JSON.parse(booksAlreadyFavorites);
+
+    const newBooks = [...books, book];
+    localStorage.setItem("mybooks", JSON.stringify(newBooks));
+
+    onRemoveFavoriteBookToList(book.id);
   }
 
   return (
@@ -35,6 +47,7 @@ export function BookCard({
           <button
             title="Adicionar aos favoritos"
             className={styles.favoriteButton}
+            onClick={() => handleAddBookToFavorite(book)}
           >
             <Heart size={30} />
           </button>
