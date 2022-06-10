@@ -2,17 +2,14 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, BookBookmark } from "phosphor-react";
 
+import { BookProps } from "../../pages/Home";
 import { BooksList } from "../../components/BooksList";
-import { DialogBookDetail } from "../../components/DialogBookDetail";
 
 import styles from "./Favorites.module.css";
-import { BookProps } from "../../components/Books";
 
 export function Favorites() {
   const navigate = useNavigate();
   const [books, setBooks] = useState<BookProps[]>([]);
-  const [isOpenBookDialogDetail, setIsOpenBookDialogDetail] = useState(false);
-  const [bookSelected, setBookSelected] = useState({} as BookProps);
 
   useEffect(() => {
     function getAllFavoriteBooks() {
@@ -24,16 +21,8 @@ export function Favorites() {
     getAllFavoriteBooks();
   }, []);
 
-  function handleToggleBookDialogDetail() {
-    setIsOpenBookDialogDetail((prev) => !prev);
-  }
-
   function handleNavigateToHome() {
     navigate("/");
-  }
-
-  function handleSelectBook(book: BookProps) {
-    setBookSelected(book);
   }
 
   function handleRemoveFavoriteBookToList(bookId: string) {
@@ -56,19 +45,9 @@ export function Favorites() {
 
       <BooksList
         books={books}
-        onSelectBook={handleSelectBook}
-        onToggleBookDialogDetail={handleToggleBookDialogDetail}
         onRemoveFavoriteBookToList={handleRemoveFavoriteBookToList}
         isFavorite
       />
-
-      {isOpenBookDialogDetail && (
-        <DialogBookDetail
-          isOpen={isOpenBookDialogDetail}
-          onClose={handleToggleBookDialogDetail}
-          book={bookSelected}
-        />
-      )}
     </main>
   );
 }

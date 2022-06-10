@@ -1,35 +1,56 @@
+import { useState } from "react";
+
 import { BookCard } from "../BookCard";
-import { BookProps } from "../Books";
+import { BookProps } from "../../pages/Home";
+import { DialogBookDetail } from "../DialogBookDetail";
+
 import styles from "./BooksList.module.css";
 
 interface BooksList {
   books: BookProps[];
-  onSelectBook: (book: BookProps) => void;
-  onToggleBookDialogDetail: () => void;
   onRemoveFavoriteBookToList?: (bookId: string) => void;
   isFavorite?: boolean;
 }
 
 export function BooksList({
   books,
-  onSelectBook,
-  onToggleBookDialogDetail,
   onRemoveFavoriteBookToList,
   isFavorite,
 }: BooksList) {
+  const [isOpenBookDialogDetail, setIsOpenBookDialogDetail] = useState(false);
+  const [bookSelected, setBookSelected] = useState({} as BookProps);
+
+  function handleToggleBookDialogDetail() {
+    setIsOpenBookDialogDetail((prev) => !prev);
+  }
+
+  function handleSelectBook(book: BookProps) {
+    setBookSelected(book);
+  }
+
   return (
-    <ul className={styles.booksList}>
-      {books.map((book) => (
-        <li key={book.id}>
-          <BookCard
-            book={book}
-            onSelectBook={onSelectBook}
-            onToggleBookDialogDetail={onToggleBookDialogDetail}
-            onRemoveFavoriteBookToList={onRemoveFavoriteBookToList}
-            isFavorite={isFavorite}
-          />
-        </li>
-      ))}
-    </ul>
+    <>
+      <ul className={styles.booksList}>
+        {books.map((book) => (
+          <li key={book.id}>
+            <BookCard
+              book={book}
+              onSelectBook={handleSelectBook}
+              onToggleBookDialogDetail={handleToggleBookDialogDetail}
+              onRemoveFavoriteBookToList={onRemoveFavoriteBookToList}
+              isFavorite={isFavorite}
+            />
+          </li>
+        ))}
+      </ul>
+
+      {isOpenBookDialogDetail && (
+        <DialogBookDetail
+          isOpen={isOpenBookDialogDetail}
+          onClose={handleToggleBookDialogDetail}
+          book={bookSelected}
+        />
+      )}
+    </>
   );
 }

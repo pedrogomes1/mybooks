@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+import { Header } from "../../components/Header";
 import { BooksList } from "../../components/BooksList";
 import { InputSearch } from "../../components/InputSearch";
-import { DialogBookDetail } from "../../components/DialogBookDetail";
 
-import styles from "./Books.module.css";
-import { Header } from "../../components/Header";
+import styles from "./Home.module.css";
 
 const URL_GET_BOOKS = `https://www.googleapis.com/books/v1/volumes?q=react&key=${
   import.meta.env.VITE_API_KEY
@@ -35,8 +34,6 @@ export interface IRequestBookProps {
 export function Home() {
   const [bookNameSearch, setBookNameSearch] = useState("");
   const [books, setBooks] = useState<BookProps[]>([]);
-  const [bookSelected, setBookSelected] = useState({} as BookProps);
-  const [isOpenBookDialogDetail, setIsOpenBookDialogDetail] = useState(false);
 
   useEffect(() => {
     async function fetchBooks() {
@@ -91,14 +88,6 @@ export function Home() {
     return books.map((book: BookProps) => book.id);
   }
 
-  function handleToggleBookDialogDetail() {
-    setIsOpenBookDialogDetail((prev) => !prev);
-  }
-
-  function handleSelectBook(book: BookProps) {
-    setBookSelected(book);
-  }
-
   function handleRemoveFavoriteBookToList(bookId: string) {
     setBooks((prevBooks) => prevBooks.filter((book) => book.id !== bookId));
   }
@@ -110,17 +99,7 @@ export function Home() {
         {!!books.length && (
           <BooksList
             books={books}
-            onSelectBook={handleSelectBook}
-            onToggleBookDialogDetail={handleToggleBookDialogDetail}
             onRemoveFavoriteBookToList={handleRemoveFavoriteBookToList}
-          />
-        )}
-
-        {isOpenBookDialogDetail && (
-          <DialogBookDetail
-            isOpen={isOpenBookDialogDetail}
-            onClose={handleToggleBookDialogDetail}
-            book={bookSelected}
           />
         )}
       </main>
