@@ -31,8 +31,47 @@ export interface RequestBookProps {
 
 const TIME_IN_MILLISECONDS_FOR_DEBOUNCE = 800;
 
+function getBooksFormatted(data: RequestBookProps) {
+  const books = data.items.map(({ id, volumeInfo }) => {
+    const {
+      title,
+      subtitle,
+      authors,
+      categories,
+      description,
+      imageLinks,
+      previewLink,
+      publishedDate,
+      publisher,
+    } = volumeInfo;
+    return {
+      id,
+      title,
+      subtitle,
+      authors,
+      categories,
+      description,
+      imageLinks,
+      previewLink,
+      publishedDate: new Date(publishedDate).toLocaleDateString("pt-br", {
+        timeZone: "UTC",
+      }),
+      publisher,
+    };
+  });
+
+  return books;
+}
+
+function filterBooksWithoutFavorites(
+  books: BookProps[],
+  allFavoriteBooksIds: string[]
+) {
+  return books.filter((book) => !allFavoriteBooksIds.includes(book.id));
+}
+
 export function Home() {
-  const [bookNameSearch, setBookNameSearch] = useState("");
+  const [bookNameSearch, setBookNameSearch] = useState("react");
   const [books, setBooks] = useState<BookProps[]>([]);
 
   const debouncedValue = useDebounce<string>(
@@ -50,37 +89,11 @@ export function Home() {
         const { data } = await axios.get<RequestBookProps>(URL_GET_BOOKS);
 
         const allFavoriteBooksIds = getAllIdsOfFavoriteBooks();
+        const booksFormatted = getBooksFormatted(data);
 
-        const booksData = data.items.map(({ id, volumeInfo }) => {
-          const {
-            title,
-            subtitle,
-            authors,
-            categories,
-            description,
-            imageLinks,
-            previewLink,
-            publishedDate,
-            publisher,
-          } = volumeInfo;
-          return {
-            id,
-            title,
-            subtitle,
-            categories,
-            authors,
-            publisher,
-            publishedDate: new Date(publishedDate).toLocaleDateString("pt-br", {
-              timeZone: "UTC",
-            }),
-            description,
-            previewLink,
-            imageLinks,
-          };
-        });
-
-        const booksWithoutFavorites = booksData.filter(
-          (book) => !allFavoriteBooksIds.includes(book.id)
+        const booksWithoutFavorites = filterBooksWithoutFavorites(
+          booksFormatted,
+          allFavoriteBooksIds
         );
 
         setBooks(booksWithoutFavorites);
