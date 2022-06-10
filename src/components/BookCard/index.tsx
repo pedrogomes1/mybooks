@@ -54,7 +54,11 @@ export function BookCard({
             className={styles.favoriteButton}
             onClick={() => handleAddBookToFavorite(book)}
           >
-            <Heart size={30} weight={isFavorite ? "fill" : "regular"} />
+            <Heart
+              data-testid="heart-svg"
+              size={30}
+              weight={isFavorite ? "fill" : "regular"}
+            />
           </button>
         </ul>
 
@@ -64,7 +68,9 @@ export function BookCard({
         </p>
         <div className={styles.containerPublishDate}>
           <h4>Publicado em:</h4>
-          <time data-testid="book-publishedAt">{book.publishedDate}</time>
+          <time dateTime={book.publishedDate} data-testid="book-publishedAt">
+            {book.publishedDate}
+          </time>
         </div>
         <button
           onClick={handleClickDetailsBook}
