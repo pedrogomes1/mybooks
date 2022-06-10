@@ -1,9 +1,9 @@
 import { Heart } from "phosphor-react";
 import { ChipCategories } from "../ChipCategories";
 
-import { BookProps } from "../../pages/Home";
-
+import { BookProps } from "../../hooks/useBooks";
 import notFoundBookImage from "../../assets/book-not-found.jpg";
+
 import styles from "./BookCard.module.css";
 
 interface BookCardProps {
@@ -44,9 +44,11 @@ export function BookCard({
       />
       <div className={styles.content}>
         <ul className={styles.categoryChipList}>
-          <li>
-            <ChipCategories />
-          </li>
+          {book.categories?.length && (
+            <li>
+              <ChipCategories categories={book.categories} />
+            </li>
+          )}
           <button
             title={
               isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"
