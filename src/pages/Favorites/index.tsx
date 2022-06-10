@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, BookBookmark } from "phosphor-react";
 
-import { BookProps } from "../../pages/Home";
+import { BookProps } from "../../hooks/useBooks";
 import { BooksList } from "../../components/BooksList";
 
 import styles from "./Favorites.module.css";
