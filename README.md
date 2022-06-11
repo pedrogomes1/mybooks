@@ -40,13 +40,13 @@ git clone https://github.com/pedrogomes1/ibm-mybooks.git
 cd ibm-mybooks
 
 - Instale as dependências:
-npm install
+yarn
 
-- Utilizando a aplicação local:
-npm run dev
+- Utilizando a aplicação local (é necessário utilizar uma chave API do google, portanto, pode criar uma nova ou usar a minha de testes que deixei na .env.example, é só criar um novo arquivo .env na raiz e copiá-lo):
+yarn dev
 
 - Para rodar todos os testes da aplicação:
-npm run test
+yarn test
 
 ````
 
