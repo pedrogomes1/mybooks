@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import useDebounce from "./useDebounce";
 import { RequestStatus } from "../types/status";
@@ -72,19 +72,33 @@ export interface RequestBookProps {
 const { idle, empty, error, loading, success } = RequestStatus;
 
 const TIME_IN_MILLISECONDS_FOR_DEBOUNCE = 800;
+const MAX_RESULTS_PER_PAGE = 10;
 
 export const useBooks = (bookNameSearch: string) => {
   const [books, setBooks] = useState<BookProps[]>([]);
   const [status, setStatus] = useState<RequestStatus>(idle);
 
-  const URL_GET_BOOKS = `https://www.googleapis.com/books/v1/volumes?q=${bookNameSearch}&key=${process.env.VITE_API_KEY}`;
+  const [startIndex, setStartIndex] = useState(MAX_RESULTS_PER_PAGE);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const URL_GET_BOOKS = `https://www.googleapis.com/books/v1/volumes?q=${bookNameSearch}&key=${process.env.VITE_API_KEY}&startIndex=${startIndex}`;
 
   const debouncedValue = useDebounce<string>(
     bookNameSearch,
     TIME_IN_MILLISECONDS_FOR_DEBOUNCE
   );
 
-  async function fetchBooks() {
+  const handleNextPage = useCallback(() => {
+    setStartIndex((prevStartIndex) => prevStartIndex + MAX_RESULTS_PER_PAGE);
+    setCurrentPage((prevCurrentPage) => prevCurrentPage + 1);
+  }, []);
+
+  const handlePreviousPage = useCallback(() => {
+    setStartIndex((prevStartIndex) => prevStartIndex - MAX_RESULTS_PER_PAGE);
+    setCurrentPage((prevCurrentPage) => prevCurrentPage - 1);
+  }, []);
+
+  const fetchBooks = useCallback(async () => {
     setStatus(loading);
 
     try {
@@ -103,11 +117,18 @@ export const useBooks = (bookNameSearch: string) => {
     } catch (err) {
       setStatus(error);
     }
-  }
+  }, [debouncedValue, startIndex]);
 
   useEffect(() => {
     fetchBooks();
-  }, [debouncedValue]);
+  }, [fetchBooks]);
 
-  return { books, setBooks, status };
+  return {
+    books,
+    setBooks,
+    status,
+    currentPage,
+    handleNextPage,
+    handlePreviousPage,
+  };
 };
