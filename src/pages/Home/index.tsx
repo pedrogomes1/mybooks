@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import BeatSpinnerLoader from "react-spinners/BeatLoader";
 
 import { Header } from "../../components/Header";
 import { BooksList } from "../../components/BooksList";
+import { Pagination } from "../../components/Pagination";
 import { InputSearch } from "../../components/InputSearch";
 
 import { useBooks } from "../../hooks/useBooks";
@@ -15,19 +16,29 @@ const { error, loading, empty } = RequestStatus;
 export function Home() {
   const [bookNameSearch, setBookNameSearch] = useState("react");
 
-  const { books, setBooks, status } = useBooks(bookNameSearch);
+  const {
+    books,
+    setBooks,
+    status,
+    currentPage,
+    handleNextPage,
+    handlePreviousPage,
+  } = useBooks(bookNameSearch);
 
-  function handleRemoveFavoriteBookToList(bookId: string) {
-    setBooks((prevBooks) => prevBooks.filter((book) => book.id !== bookId));
-  }
+  const handleRemoveFavoriteBookToList = useCallback(
+    (bookId: string) => {
+      setBooks((prevBooks) => prevBooks.filter((book) => book.id !== bookId));
+    },
+    [setBooks]
+  );
 
-  function handleSearchBook(bookName: string) {
+  const handleSearchBook = useCallback((bookName: string) => {
     const bookNameSearch = bookName.trimEnd();
 
     if (bookNameSearch.length) {
       setBookNameSearch(bookNameSearch);
     }
-  }
+  }, []);
 
   return (
     <>
@@ -50,6 +61,12 @@ export function Home() {
             onRemoveFavoriteBookToList={handleRemoveFavoriteBookToList}
           />
         )}
+
+        <Pagination
+          currentPage={currentPage}
+          onNextPage={handleNextPage}
+          onPreviousPage={handlePreviousPage}
+        />
       </main>
     </>
   );
