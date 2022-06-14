@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import BeatSpinnerLoader from "react-spinners/BeatLoader";
 
 import { Header } from "../../components/Header";
@@ -17,17 +17,20 @@ export function Home() {
 
   const { books, setBooks, status } = useBooks(bookNameSearch);
 
-  function handleRemoveFavoriteBookToList(bookId: string) {
-    setBooks((prevBooks) => prevBooks.filter((book) => book.id !== bookId));
-  }
+  const handleRemoveFavoriteBookToList = useCallback(
+    (bookId: string) => {
+      setBooks((prevBooks) => prevBooks.filter((book) => book.id !== bookId));
+    },
+    [setBooks]
+  );
 
-  function handleSearchBook(bookName: string) {
+  const handleSearchBook = useCallback((bookName: string) => {
     const bookNameSearch = bookName.trimEnd();
 
     if (bookNameSearch.length) {
       setBookNameSearch(bookNameSearch);
     }
-  }
+  }, []);
 
   return (
     <>

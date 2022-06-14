@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import useDebounce from "./useDebounce";
 import { RequestStatus } from "../types/status";
 
-function getAllIdsOfFavoriteBooks() {
+function getAllIdsOfFavoriteBooks(): string[] {
   const booksAlreadyFavorites = localStorage.getItem("mybooks") || "[]";
   const books = JSON.parse(booksAlreadyFavorites);
   return books.map((book: BookProps) => book.id);
@@ -84,7 +84,7 @@ export const useBooks = (bookNameSearch: string) => {
     TIME_IN_MILLISECONDS_FOR_DEBOUNCE
   );
 
-  async function fetchBooks() {
+  const fetchBooks = useCallback(async () => {
     setStatus(loading);
 
     try {
@@ -103,11 +103,11 @@ export const useBooks = (bookNameSearch: string) => {
     } catch (err) {
       setStatus(error);
     }
-  }
+  }, [debouncedValue]);
 
   useEffect(() => {
     fetchBooks();
-  }, [debouncedValue]);
+  }, [fetchBooks]);
 
   return { books, setBooks, status };
 };
