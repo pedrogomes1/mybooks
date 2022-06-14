@@ -1,0 +1,41 @@
+.actionsButton {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  margin-top: 3rem;
+
+  gap: 1rem;
+}
+
+.actionsButton span {
+  border: 1px solid var(--purple-500);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  font-weight: bold;
+}
+
+.button {
+  background: var(--purple-300);
+  color: var(--white);
+  border: 1px solid var(--purple-500);
+  border-radius: 8px;
+  height: 4rem;
+  padding: 0 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.1s, background-color 0.1s;
+  font-weight: 500;
+}
+
+.button:hover {
+  background: var(--purple-500);
+  color: var(--white);
+}
+
+.button:disabled {
+  background: var(--gray-100);
+  border: 0;
+  cursor: not-allowed;
+  color: var(--gray-300);
+}
