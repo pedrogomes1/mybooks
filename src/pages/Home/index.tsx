@@ -3,6 +3,7 @@ import BeatSpinnerLoader from "react-spinners/BeatLoader";
 
 import { Header } from "../../components/Header";
 import { BooksList } from "../../components/BooksList";
+import { Pagination } from "../../components/Pagination";
 import { InputSearch } from "../../components/InputSearch";
 
 import { useBooks } from "../../hooks/useBooks";
@@ -15,7 +16,14 @@ const { error, loading, empty } = RequestStatus;
 export function Home() {
   const [bookNameSearch, setBookNameSearch] = useState("react");
 
-  const { books, setBooks, status } = useBooks(bookNameSearch);
+  const {
+    books,
+    setBooks,
+    status,
+    currentPage,
+    handleNextPage,
+    handlePreviousPage,
+  } = useBooks(bookNameSearch);
 
   const handleRemoveFavoriteBookToList = useCallback(
     (bookId: string) => {
@@ -51,6 +59,14 @@ export function Home() {
           <BooksList
             books={books}
             onRemoveFavoriteBookToList={handleRemoveFavoriteBookToList}
+          />
+        )}
+
+        {!!books.length && (
+          <Pagination
+            currentPage={currentPage}
+            onNextPage={handleNextPage}
+            onPreviousPage={handlePreviousPage}
           />
         )}
       </main>

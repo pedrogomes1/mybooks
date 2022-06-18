@@ -42,6 +42,7 @@ function BookCardComponent({
       <img
         src={book.imageLinks?.thumbnail || notFoundBookImage}
         alt="Imagem representativa do livro"
+        loading="lazy"
       />
       <div className={styles.content}>
         <ul className={styles.categoryChipList}>
