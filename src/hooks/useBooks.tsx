@@ -81,7 +81,7 @@ export const useBooks = (bookNameSearch: string) => {
   const [startIndex, setStartIndex] = useState(MAX_RESULTS_PER_PAGE);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const URL_GET_BOOKS = `https://www.googleapis.com/books/v1/volumes?q=${bookNameSearch}&key=${process.env.VITE_API_KEY}&startIndex=${startIndex}`;
+  const URL_GET_BOOKS = `https://www.googleapis.com/books/v1/volumes?q=${bookNameSearch}&startIndex=${startIndex}`;
 
   const debouncedValue = useDebounce<string>(
     bookNameSearch,
