@@ -62,11 +62,13 @@ export function Home() {
           />
         )}
 
-        <Pagination
-          currentPage={currentPage}
-          onNextPage={handleNextPage}
-          onPreviousPage={handlePreviousPage}
-        />
+        {!!books.length && (
+          <Pagination
+            currentPage={currentPage}
+            onNextPage={handleNextPage}
+            onPreviousPage={handlePreviousPage}
+          />
+        )}
       </main>
     </>
   );
