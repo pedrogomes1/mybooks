@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Heart } from "phosphor-react";
 import { ChipCategories } from "../ChipCategories";
 
@@ -14,7 +15,7 @@ interface BookCardProps {
   isFavorite?: boolean;
 }
 
-export function BookCard({
+function BookCardComponent({
   book,
   onToggleBookDialogDetail,
   onSelectBook,
@@ -85,3 +86,7 @@ export function BookCard({
     </div>
   );
 }
+
+export const BookCard = memo(BookCardComponent, (prevProps, nextProps) => {
+  return Object.is(prevProps.book, nextProps.book);
+});

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 import { BookProps } from "../../hooks/useBooks";
 import { BookCard } from "../BookCard";
@@ -20,13 +20,13 @@ export function BooksList({
   const [isOpenBookDialogDetail, setIsOpenBookDialogDetail] = useState(false);
   const [bookSelected, setBookSelected] = useState({} as BookProps);
 
-  function handleToggleBookDialogDetail() {
+  const handleToggleBookDialogDetail = useCallback(() => {
     setIsOpenBookDialogDetail((prev) => !prev);
-  }
+  }, []);
 
-  function handleSelectBook(book: BookProps) {
+  const handleSelectBook = useCallback((book: BookProps) => {
     setBookSelected(book);
-  }
+  }, []);
 
   return (
     <>

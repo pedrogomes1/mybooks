@@ -3,7 +3,7 @@ import axios from "axios";
 import useDebounce from "./useDebounce";
 import { RequestStatus } from "../types/status";
 
-function getAllIdsOfFavoriteBooks() {
+function getAllIdsOfFavoriteBooks(): string[] {
   const booksAlreadyFavorites = localStorage.getItem("mybooks") || "[]";
   const books = JSON.parse(booksAlreadyFavorites);
   return books.map((book: BookProps) => book.id);
